@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Cup Countdown</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #C7E9D8;
+      color: #2A0C4E;
+      font-family: "Google Sans", Arial, sans-serif;
+      text-align: center;
+      padding: 24px;
+    }
+
+    main {
+      max-width: 900px;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      line-height: 1.05;
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(90px, 1fr));
+      gap: 18px;
+    }
+
+    .time-box {
+      border: 2px solid #2A0C4E;
+      border-radius: 24px;
+      padding: 24px 16px;
+    }
+
+    .number {
+      display: block;
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 700;
+    }
+
+    .label {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 500;
+    }
+
+    .subtitle {
+      margin-top: 24px;
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 600px) {
+      .countdown {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>You have the idea, we have what you need.</h1>
+
+    <section class="countdown" aria-label="Countdown to the World Cup final">
+      <div class="time-box">
+        <span class="number" id="days">00</span>
+        <span class="label">Days</span>
+      </div>
+      <div class="time-box">
+        <span class="number" id="hours">00</span>
+        <span class="label">Hours</span>
+      </div>
+      <div class="time-box">
+        <span class="number" id="minutes">00</span>
+        <span class="label">Minutes</span>
+      </div>
+      <div class="time-box">
+        <span class="number" id="seconds">00</span>
+        <span class="label">Seconds</span>
+      </div>
+    </section>
+
+    <p class="subtitle">Countdown to the FIFA World Cup Final — July 19, 2026</p>
+  </main>
+
+  <script>
+    const finalMatchDate = new Date("2026-07-19T15:00:00-04:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = finalMatchDate - now;
+
+      if (distance <= 0) {
+        document.querySelector(".countdown").innerHTML = "<h2>The final is here!</h2>";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
